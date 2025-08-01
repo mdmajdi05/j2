@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday Jyoti</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body, html {
+      height: 100%;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #fff;
+      overflow: hidden;
+    }
+    .video-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+      overflow: hidden;
+    }
+    .video-bg video {
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+    }
+    .overlay, .container, .carousel-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(0, 0, 0, 0.6);
+      flex-direction: column;
+      text-align: center;
+    }
+    .start-button, .surprise-button {
+      background-color: #fff;
+      color: #e91e63;
+      padding: 12px 25px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      margin-top: 20px;
+    }
+    .start-button:hover, .surprise-button:hover {
+      background-color: #e91e63;
+      color: #fff;
+    }
+    .carousel-container {
+      display: none;
+      background-color: rgba(0, 0, 0, 0.8);
+      z-index: 10;
+    }
+    .carousel {
+      display: flex;
+      overflow: hidden;
+      width: 80vw;
+      max-width: 600px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    }
+    .carousel img {
+      width: 100%;
+      display: none;
+      border-radius: 10px;
+    }
+    .carousel img.active {
+      display: block;
+    }
+    .proposal {
+      margin-top: 20px;
+      font-size: 2rem;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <div class="video-bg">
+    <video id="bgVideo" autoplay loop playsinline muted>
+      <source src="./img/jvideo.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+  </div>
+
+  <!-- Surprise Audio -->
+  <audio id="surpriseAudio">
+    <source src="./img/Happy Birthday Jyoti  Jyoti Happy Birthday Song  Jyoti.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <!-- Overlay Start Screen -->
+  <div class="overlay" id="startOverlay">
+    <h1>🎉 Surprise for Jyoti joki meri payari si jaan hai 🎉</h1>
+    <button class="start-button" onclick="startPage()">Click kro kuttua</button>
+  </div>
+
+  <!-- Main Content -->
+  <div class="container" id="mainContent" style="display:none;">
+    <h1>Happy Birthday Jyoti ❤️</h1>
+    <p>
+      Ek aur saal tumhari zindagi ka, lekin mere liye ek aur reason mila tumse aur zyada pyar karne ka...<br/>
+      Tum meri duniya ho, meri smile ho, meri sabse pyari feeling ho.<br/>
+      Aaj ka din sirf tumhara hai, aur har saal main yeh din aur bhi khaas banaunga...<br />
+      <strong>— Tumhara Majdi ❤️</strong>
+    </p>
+    <div class="image-container" style="margin-top: 50px;">
+      <img src="./img/ring2.png" style="border-radius: 5%;" height="300" width="200" alt="Proposal Scene" />
+    </div>
+    <button class="surprise-button" onclick="showCarousel()">Surprise Chahiye meri jaan ko 💝</button>
+  </div>
+
+  <!-- Carousel Proposal -->
+  <div class="carousel-container" id="carouselContainer">
+    <div class="carousel" style="width: auto; height: 80%;">
+      <img src="./img/j1.jpg" class="active" alt="Moment 1" />
+      <img src="./img/j2.jpg" alt="Moment 2" />
+      <img src="./img/j3.jpg" alt="Moment 3" />
+      <img src="./img/j4.jpg" alt="Moment 4" />
+      <img src="./img/j5.jpg" alt="Moment 5" />
+      <img src="./img/j6.jpg" alt="Moment 6" />
+      <img src="./img/j7.jpg" alt="Moment 7" />
+      <img src="./img/j8.jpg" alt="Moment 8" />
+      <img src="./img/j9.jpg" alt="Moment 9" />
+    </div>
+    <div class="proposal">💍 Jyoti, kya tum mujhse shaadi karogi?</div>
+  </div>
+
+  <script>
+    function startPage() {
+      document.getElementById('startOverlay').style.display = 'none';
+      document.getElementById('bgVideo').muted = false;
+      document.getElementById('bgVideo').play();
+      document.getElementById('mainContent').style.display = 'flex';
+    }
+
+    function showCarousel() {
+      document.getElementById('carouselContainer').style.display = 'flex';
+      document.getElementById('surpriseAudio').play();
+      let images = document.querySelectorAll('.carousel img');
+      let index = 0;
+      setInterval(() => {
+        images.forEach((img, i) => img.classList.remove('active'));
+        index = (index + 1) % images.length;
+        images[index].classList.add('active');
+      }, 2000);
+    }
+  </script>
+</body>
+</html>

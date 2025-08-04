@@ -88,6 +88,8 @@
   </style>
 </head>
 <body>
+
+  <!-- Background Video -->
   <div class="video-bg">
     <video id="bgVideo" autoplay loop playsinline muted>
       <source src="./img/jvideo.mp4" type="video/mp4" />
@@ -95,16 +97,28 @@
     </video>
   </div>
 
-  <!-- Surprise Audio -->
-  <audio id="surpriseAudio">
-    <source src="./img/Happy Birthday Jyoti  Jyoti Happy Birthday Song  Jyoti.mp3" type="audio/mpeg">
+  <!-- Audio -->
+  <audio id="surpriseAudio" preload="auto">
+    <source src="./img/surprise.mp3" type="audio/mpeg">
     Your browser does not support the audio element.
   </audio>
 
-  <!-- Overlay Start Screen -->
+  <!-- Start Overlay -->
   <div class="overlay" id="startOverlay">
-    <h1>🎉 Surprise for Jyoti joki meri payari si jaan hai 🎉</h1>
-    <button class="start-button" onclick="startPage()">Click kro kuttua</button>
+    <h1>🎉 Surprise for Jyoti joki meri pyari si jaan hai 🎉</h1>
+    <button class="start-button" onclick="startPage()">Click kro kuttua 😄</button>
+  </div>
+
+  <!-- Custom Password Modal -->
+  <div class="overlay" id="passwordModal" style="z-index: 100; display: none;">
+    <div style="background: rgba(255, 255, 255, 0.1); padding: 40px; border-radius: 15px; backdrop-filter: blur(8px); box-shadow: 0 0 20px rgba(0,0,0,0.6); text-align: center;">
+      <h2 style="margin-bottom: 20px;">💖 Secret Surprise for Jyoti 💖</h2>
+      <p style="margin-bottom: 15px;">Apna pyaara password daalo meri jaan 🥺</p>
+      <input type="password" id="passwordInput" placeholder="Password likho yahan..." style="padding: 10px 20px; border-radius: 30px; border: none; font-size: 1rem; outline: none; width: 250px; text-align: center;">
+      <br><br>
+      <button onclick="verifyPassword()" style="padding: 10px 25px; background-color: #e91e63; border: none; border-radius: 30px; color: #fff; font-weight: bold; cursor: pointer;">Unlock Surprise 🔓</button>
+      <p id="errorText" style="color: #ff6b81; margin-top: 15px; font-weight: bold; display: none;">Galat password hai... sahi password daal meri jaan 💔</p>
+    </div>
   </div>
 
   <!-- Main Content -->
@@ -119,10 +133,10 @@
     <div class="image-container" style="margin-top: 50px;">
       <img src="./img/ring2.png" style="border-radius: 5%;" height="300" width="200" alt="Proposal Scene" />
     </div>
-    <button class="surprise-button" onclick="showCarousel()">Surprise Chahiye meri jaan ko 💝</button>
+    <button class="surprise-button" onclick="showCarousel()">Surprise chahiye meri jaan ko 💝</button>
   </div>
 
-  <!-- Carousel Proposal -->
+  <!-- Surprise Carousel -->
   <div class="carousel-container" id="carouselContainer">
     <div class="carousel" style="width: auto; height: 80%;">
       <img src="./img/j1.jpg" class="active" alt="Moment 1" />
@@ -138,25 +152,51 @@
     <div class="proposal">💍 Jyoti, kya tum mujhse shaadi karogi?</div>
   </div>
 
+  <!-- JavaScript -->
   <script>
     function startPage() {
-      document.getElementById('startOverlay').style.display = 'none';
-      document.getElementById('bgVideo').muted = false;
-      document.getElementById('bgVideo').play();
-      document.getElementById('mainContent').style.display = 'flex';
+      document.getElementById('passwordModal').style.display = 'flex';
+    }
+
+    function verifyPassword() {
+      const input = document.getElementById('passwordInput').value;
+      const errorText = document.getElementById('errorText');
+
+      if (input === "Jyotilovemajdi") {
+        document.getElementById('passwordModal').style.display = 'none';
+        document.getElementById('startOverlay').style.display = 'none';
+
+        const video = document.getElementById('bgVideo');
+        video.muted = false;
+        video.play();
+
+        const audio = document.getElementById('surpriseAudio');
+        audio.pause();
+        audio.currentTime = 0;
+        audio.play().catch(() => {
+          alert("Ek baar screen par tap kro sound ke liye 🎵");
+          document.body.addEventListener('click', () => {
+            audio.play();
+          }, { once: true });
+        });
+
+        document.getElementById('mainContent').style.display = 'flex';
+      } else {
+        errorText.style.display = 'block';
+      }
     }
 
     function showCarousel() {
       document.getElementById('carouselContainer').style.display = 'flex';
-      document.getElementById('surpriseAudio').play();
       let images = document.querySelectorAll('.carousel img');
       let index = 0;
       setInterval(() => {
-        images.forEach((img, i) => img.classList.remove('active'));
+        images.forEach((img) => img.classList.remove('active'));
         index = (index + 1) % images.length;
         images[index].classList.add('active');
       }, 2000);
     }
   </script>
+
 </body>
 </html>
